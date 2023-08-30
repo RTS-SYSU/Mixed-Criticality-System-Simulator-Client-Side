@@ -136,7 +136,7 @@
     .informationStyle {
         position: absolute;
         /* 字体大小 */
-        font-size: 14px;
+        font-size: 18px;
 
         /* 需要修改成 inline-block才可以设置宽度和高度 */
         display:inline-block;

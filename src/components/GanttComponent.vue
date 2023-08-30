@@ -86,11 +86,11 @@
         border-color: rgb(208, 211, 212);
 
         /* 设置组件宽度和高度，其中高度必须设置为 100% ，子组件才不会被迫拉伸到跟父组件一样的高度 */
-        width: 764px;
+        width: 60%;
         height: 100%;
 
         /* 和左边元素的间隔 */
-        margin-left: 10px;
+        margin-left: 1%;
 
         /* 创建层叠上下文：比task-information小 */
         z-index: 2;
@@ -99,10 +99,10 @@
 
     /* 图例样式 */
     .legend {
-        width: 300px;
+        width: 15%;
 
         /* 设置其于左边元素之间的间隔 */
-        margin-left: 10px;
+        margin-left: 1%;
 
         height: 100%;
 
@@ -113,7 +113,7 @@
         display: block;
 
         /* 设置其为父组件宽度的 20 % */
-        width: 300px;
+        width: 20%;
         /* 高度设置成自理 */
         height: 100%;
 

@@ -68,16 +68,17 @@ import GanttTaskInformation from './GanttTaskInformation.vue';
                 // 获取目标 DOM 元素
                 let displayBlocks = document.querySelectorAll('.resource-access-details')
 
-                let targetDOM = null;
+                // 判断 event.target(触发的 DOM 元素) 是否是 access-resource-table 里面的内容
+                let targetDOM = false;
 
                 for (let i = 0; i < displayBlocks.length; ++i) {
-                    if (event.target == displayBlocks[i]) {
-                        targetDOM = event.target
+                    if (displayBlocks[i].contains(event.target)) {
+                        targetDOM = true;
                         break
                     }
                 }
 
-                if (targetDOM === null){
+                if (!targetDOM){
                     for (let i = 0; i < displayBlocks.length; ++i) {
                         displayBlocks[i].style.display = "none"
                     }
@@ -92,12 +93,12 @@ import GanttTaskInformation from './GanttTaskInformation.vue';
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 45% 55% 40% 40% 50%;
+        grid-template-columns: 35% 40% 25% 25% 32%;
 
     }
 
     .font-style {
-        font-size: 16px;
+        font-size: 20px;
 
         /* 字体颜色 */
         color: rgb(208, 211, 212);

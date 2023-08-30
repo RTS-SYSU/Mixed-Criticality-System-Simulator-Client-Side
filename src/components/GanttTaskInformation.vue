@@ -9,11 +9,18 @@
         </div>
     
         <div ref="resource-access-details" class="resource-access-details" v-bind:style="resourceDetailsStyle">
-            <span class="font-style border-style" style="font-size: 14px;">Access Resource</span>
-            <span class="font-style border-style" style="font-size: 14px;">Access Resource Time</span>
-            
-            
+            <div class="grid-style">
+                <span class="font-style border-style" style="font-size: 18px;">Access Resource</span>
+                <span class="font-style border-style" style="font-size: 18px;">Access Resource Time</span>
+            </div>
+
+            <div class="grid-style" v-for="(resourceId, index) in taskInformation.resourceAccessIndex" v-bind:key="index">
+                <span class="font-style border-style" style="font-size: 18px;">{{ resourceId }}</span>
+                <span class="font-style border-style" style="font-size: 18px;">{{ taskInformation.resourceAccessTime[index] }}</span>
+            </div>
         </div>
+
+
     </div>
 </template>
 
@@ -31,8 +38,8 @@
                         "priority": 998,
                         "criticality": 1,
                         "releaseTime": 15,
-                        "resourceAccessTime" : [10, 20],
-                        "resourceAccessIndex" : [0, 1]
+                        "resourceAccessIndex" : [0, 1],
+                        "resourceAccessTime" : [10, 20]
                     }
                 }
             }
@@ -52,7 +59,9 @@
 
             // 设计访问资源的详细信息
             resourceDetailsStyle : function() {
-                return {'height' : ((1 + this.taskInformation.resourceAccessTime.length) * 20) + 'px'}
+                return {
+                    'height' : ((1 + this.taskInformation.resourceAccessTime.length) * 40) + 'px'
+                }
             }
         },
 
@@ -84,8 +93,14 @@
             // 鼠标点击 div （包括 span，利用冒泡）时，显示出任务的具体信息
             clickContentStyle : function(event) 
             {
-                // 修改 style 让其显示出来
-                this.$refs['resource-access-details'].style.display = 'grid'
+                // 先隐藏所有的 resource-access-details
+                let displayBlocks = document.querySelectorAll('.resource-access-details')
+                for (let i = 0; i < displayBlocks.length; ++i) {
+                    displayBlocks[i].style.display = 'none'
+                }
+
+                // 然后再修改 style 让其显示出来
+                this.$refs['resource-access-details'].style.display = 'block';
 
                 // 停止冒泡事件的发生
                 event.stopPropagation();
@@ -96,11 +111,12 @@
 </script>
 
 <style scoped>
+    
     .content-style {
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 45% 55% 40% 40% 50%;
+        grid-template-columns: 35% 40% 25% 25% 32%;
 
     }
 
@@ -109,7 +125,7 @@
     } */
 
     .font-style {
-        font-size: 16px;
+        font-size: 18px;
 
         /* 字体颜色 */
         color: rgb(208, 211, 212);
@@ -126,6 +142,7 @@
 
     /* 加上边框 */
     .border-style {
+
         border-style: solid;
         
         /* border-width: top right bottom left, 按顺时针依次作用 */
@@ -145,12 +162,11 @@
         /* 使用绝对定位定位到页面中间 */
         position: absolute;
 
-        left: 1092px;
-        top: 130px;
+        left: 82%;
+        top: 30%;
 
         background-color: white;
-
-        width: 300px;
+        width: 400px;
 
         /* 边框样式 */
         border-style: solid;
@@ -159,8 +175,43 @@
         border-width: 2px 0px 0px 2px;
 
         border-color: rgb(208, 211, 212);
+    }
+
+    /* 资源访问的头部信息样式 */
+    .grid-style {
+        display: grid;
 
         grid-template-columns: 45% 55%;
+
+        height: 40px;
     }
     
+    /* 访问资源的详细信息对应的样式 */
+    .body-style {
+        /* 边框样式 */
+        border-style: solid;
+        
+        /* border-width: top right bottom left, 按顺时针依次作用 */
+        border-width: 0px 2px 2px 0px;
+
+        /* 边框颜色 */
+        border-color: rgb(208, 211, 212);
+
+        font-size: 18px;
+
+        /* 字体颜色 */
+        color: rgb(208, 211, 212);
+
+        /* 字体加粗效果 */
+        font-weight: bold;
+
+        /* 字体在水平方向上居中 */
+        text-align: center;
+
+        /* 字体在垂直方向上居中 */
+        line-height: 40px;
+
+        /* 设置高度 */
+        height: 40px;
+    }
 </style>
