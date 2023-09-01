@@ -6,9 +6,15 @@
         <!-- 
         根据传递进来的数据绘制对应的甘特图（状态）
         -->
-        <span v-bind:class="taskInformation.state" v-for="(taskInformation, index) in taskInformations" 
+        <span class="taskId-style" v-for="(taskInformation, index) in taskInformations"
+                v-bind:key="'span: ' + + (index)"
+                v-bind:style="duration(taskInformation)">
+                {{ "Task ID: " + taskInformation.dynamicPid }}
+        </span>
+        <div v-bind:class="taskInformation.state + '-block'" v-for="(taskInformation, index) in taskInformations" 
                 v-bind:key="'block:' + (taskInformation.startTime + index)" 
-                v-bind:style="duration(taskInformation)"> {{ "Task ID: " + taskInformation.dynamicPid }} </span>
+                v-bind:style="duration(taskInformation)">
+        </div>
     </div>
 </template>
 
@@ -112,7 +118,7 @@
             /* 字体在水平方向上居中 */
         text-align: center;
             /* 设置成和 div 一样的高度即可使得字体在垂直方向上居中 */
-        line-height: 40px;
+        line-height: 80px;
 
         /* 设置每一行的之间的边框样式 */
             /* border-width: top right bottom left, 按顺时针依次作用 */
@@ -123,26 +129,33 @@
         border-color: rgb(208, 211, 212); 
 
         width: 80px;
-        height: 40px;
+        height: 80px;
     }
 
     /* normal-execution: 正常执行时的样式 */
-    .normal-execution {
+    .normal-execution-block {
+        box-sizing: border-box;
+
         /*  */
         position: absolute;
-        /* 背景颜色为黑色 */
-        background-color: rgb(133, 193, 233);
-        /* background-color: rgb(0, 0, 0); */
+        display: inline-block;
 
         /* 设置宽度和高度 */
         width: 80px;
-        height:30px;
+        height:40px;
 
-        /* 设置边框四周有角度 */
-        border-radius: 40px;
+        /* 边框样式 */
+        border-style: solid;
+        
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
 
-        /* 设置距离顶端 4px */
-        top: 5px;
+        border-color: black;
+
+        /* 设置距离顶端 40px */
+        top: 40px;
 
         /* 设置字体大小 */
         font-size: 20px;
@@ -151,60 +164,77 @@
             /* 字体在水平方向上居中 */
         text-align: center;
             /* 设置成和 div 一样的高度即可使得字体在垂直方向上居中 */
-        line-height: 30px;
+        line-height: 40px;
     }
 
     /* access-resource: 访问资源（critical section）*/
-    .access-resource {
+    .access-resource-block {
+        box-sizing: border-box;
+
         /*  */
         position: absolute;
-        /* 背景颜色 */
-        background-color: rgb(130, 224, 170);
+
+        display: inline-block;
+
+        /* 背景图片 */
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><line x1=\"0\" y1=\"0\" x2=\"80\" y2=\"40\" stroke=\"black\" fill=\"none\"/></svg>");
 
         /* 设置宽度和高度 */
         width: 80px;
-        height:30px;
+        height:40px;
 
-        /* 设置边框四周有角度 */
-        border-radius: 40px;
+        border-style: solid;
 
-        /* 设置距离顶端 4px */
-        top: 5px;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
 
-        /* 设置字体大小 */
-        font-size: 20px;
+        border-color: black;
 
-        /* 字体居中 */
-            /* 字体在水平方向上居中 */
-        text-align: center;
-            /* 设置成和 div 一样的高度即可使得字体在垂直方向上居中 */
-        line-height: 30px;
+        /* 设置距离顶端 40px */
+        top: 40px;
     }
 
     /* spinning: 自旋等待资源 */
-    .spinning {
+    .spinning-block {
+        box-sizing: border-box;
+
         position: absolute;
-        /* 背景颜色 */
-        background-color: rgb(236, 112, 99);
+
+        display: inline-block;
 
         /* 设置宽度和高度 */
         width: 80px;
-        height:30px;
+        height:40px;
 
-        /* 设置边框四周有角度 */
-        border-radius: 40px;
+        border-style: solid;
 
-        /* 设置距离顶端 4px */
-        top: 5px;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
 
-        /* 设置字体大小 */
+        border-color: black;
+
+        /* 设置背景图片为折线 */
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><polyline points='0,0 10,40 20,0 30,40 40,0 50,40 60,0 70,40 80,0' stroke='black' fill='none'/></svg>");
+
+        /* 设置距离顶端 40px */
+        top: 40px;
+    }
+
+    /* 字体大小以及位置 */
+    .taskId-style {
+        position: absolute;
         font-size: 20px;
+        font-weight: bold;
 
-        /* 字体居中 */
-            /* 字体在水平方向上居中 */
+        /* 设置字体在水平方向上居中 */
         text-align: center;
-            /* 设置成和 div 一样的高度即可使得字体在垂直方向上居中 */
-        line-height: 30px;
+
+        height: 40px;
+        line-height: 40px;
     }
 
 </style>
