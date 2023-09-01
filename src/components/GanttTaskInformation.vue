@@ -162,8 +162,8 @@
         /* 使用绝对定位定位到页面中间 */
         position: absolute;
 
-        left: 82%;
-        top: 30%;
+        left: 2010px;
+        top: 220px;
 
         background-color: white;
         width: 400px;
