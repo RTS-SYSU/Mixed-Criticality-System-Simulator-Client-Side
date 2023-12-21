@@ -1,8 +1,11 @@
 <template>
+    <!-- 
+        任务信息表格
+     -->
     <div>
         <div class="task-information" v-bind:style="calculateHeight()">
             <!-- 
-                Header: 头信息
+                Header: 头信息/标题信息
             -->
             <div class="header-style">
                 <span class="font-style border-style">Task id</span>
@@ -32,6 +35,7 @@
             </div>
         </div>
 
+        <!-- 翻页 -->
         <div class="taskInformationPageFlipStyle" v-if="taskInformationTotalPageSize > 0">
             <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
             <span class="flip-span">{{ (taskInformationPageNow + 1) + " / " + (this.taskInformationTotalPageSize)}}</span>

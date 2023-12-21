@@ -1,4 +1,5 @@
 <template>
+    <!-- 为每一个处理器绘制对应的甘特图 -->
     <div class="cpuGanttChartLinesStyle" v-bind:style="columnNumbers">
         <!-- 先将时间刻度显示出来 -->
         <span class="chart-item" v-for="(item, index) in timeAxisLength" v-bind:key="index"></span>
@@ -220,11 +221,6 @@
                         'left' : (eventTimePoint.eventTime * 80 - 21) + 'px'
                     }
             }
-        },
-
-        mounted() {
-            // 在挂载完成之后，我们需要去修改一下最后的那个 <span> 标签所对应的右边框大小，除此之外还需要再修改一下宽度
-                // this.$refs.span[this.$refs.span.length - 1].style.borderWidth = '0px 0px 2px 0px'
         }
     }
 </script>

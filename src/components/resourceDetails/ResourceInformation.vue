@@ -1,12 +1,21 @@
 <template>
+    <!-- 
+        展示每一个资源的详细信息
+    -->
     <div>
+        <!-- 
+            显示资源的基本信息
+         -->
         <div class="content-style" v-on="contentEvent">
             <span ref="content1" class="font-style border-style" >{{ resourceInformation.resourceId }}</span>
             <span ref="content2" class="font-style border-style" >{{ resourceInformation.c_low }}</span>
             <span ref="content3" class="font-style border-style" >{{ resourceInformation.c_high }}</span>
             <span ref="content4" class="font-style border-style" >{{ resourceInformation.isGlobalResource }}</span>
         </div>
-    
+
+        <!-- 
+            显示访问资源的所有任务
+         -->
         <div ref="task-access-details" class="task-access-details" v-bind:style="taskDetailsStyle">
             <div class="grid-style">
                 <span class="font-style border-style" style="font-size: 18px;">Access Resource Task</span>

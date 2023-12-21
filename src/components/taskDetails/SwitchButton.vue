@@ -1,4 +1,7 @@
 <template>
+    <!-- 
+        开关按钮
+     -->
     <div class="m-switch-wrap">
       <div @click="disabled ? e => e.preventDefault() : onSwitch()" :class="['m-switch', { 'switch-checked': checkedVal, 'disabled': disabled }]">
         <div :class="['u-switch-inner', checkedVal ? 'inner-checked' : 'inner-unchecked' ]">{{ checkedVal ? checkedInfo : uncheckedInfo }}</div>

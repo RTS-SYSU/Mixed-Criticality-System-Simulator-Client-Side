@@ -1,4 +1,7 @@
 <template>
+    <!-- 
+        显示资源共享协议的可调度性。
+     -->
     <div class="isSchedulableStyle">
         <!-- MSRP 协议 -->
         <div class="item" ref="protocolMSRP">
@@ -46,7 +49,6 @@
 
         </div>
 
-        <!-- 这里需要传过来 PWLP 协议是否可调度的信息 -->
         <!-- PWLP 协议 -->
         <div class="item" ref="protocolPWLP">
             <span class="informationStyle"> PWLP 协议调度情况</span>
@@ -98,8 +100,7 @@
             },
             sendProtocol : function(protocalName) {
                 // 第一个参数是事件名称
-                // 第二个参数是传递的参数
-                // 触发某一个事件
+                // 第二个参数是传递的参数，协议名称
                 this.$bus.$emit('getGanttChart', protocalName)
             }
         }

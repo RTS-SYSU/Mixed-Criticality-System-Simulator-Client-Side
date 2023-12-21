@@ -1,5 +1,6 @@
 <template>
     <div class="cpuGanttTimeAxisLength" :style="columnNumbers">
+        <!-- 绘制时间轴 -->
         <span class="chart-item" v-for="(item, index) in timeAxisLength" v-bind:key="index">{{ index }}</span>
     </div>
 </template>

@@ -1,7 +1,19 @@
 <template>
+    <!-- 
+        实现翻页功能
+     -->
     <div class="cpuPgaeFlipStyle" v-if="cpuTotalPageSize > 0">
+        <!-- 
+            左箭头，页数减一
+         -->
         <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
+        <!-- 
+            显示页数
+        -->
         <span>{{ (cpuPageNow + 1) + " / " + (this.cpuTotalPageSize)}}</span>
+        <!-- 
+            右箭头，页数加一
+         -->
         <button @click="clickPageUp()" v-on="buttonEvent">{{ '&gt;' }}</button>
     </div>
 </template>

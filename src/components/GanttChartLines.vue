@@ -1,11 +1,11 @@
 <template>
+    <!-- 
+        根据传递进来的数据为每一个任务绘制对应的甘特图（状态）
+        -->
     <div class="chart-row-bars" :style="columnNumbers">
         <span class="chart-item" style="width: 120px;">{{ "CPU ID: " + cpuId }}</span>
         <span class="chart-item" v-for="item in timeAxisLength" v-bind:key="item"></span>
 
-        <!-- 
-        根据传递进来的数据绘制对应的甘特图（状态）
-        -->
         <span class="taskId-style" v-for="(taskInformation, index) in taskInformations"
                 v-bind:key="'span: ' + + (index)"
                 v-bind:style="duration(taskInformation)">

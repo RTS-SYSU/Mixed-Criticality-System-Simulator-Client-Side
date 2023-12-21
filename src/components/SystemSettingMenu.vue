@@ -1,4 +1,7 @@
 <template>
+    <!-- 
+        模拟工具运行环境配置菜单。
+     -->
     <div class="SystemSettingMenu-style" v-bind:style="calculateHeight">
         <!-- 标题 -->
         <div class="header-style">

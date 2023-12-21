@@ -1,4 +1,7 @@
 <template>
+    <!-- 
+        最坏运行情况配置菜单
+     -->
     <div class="WorstCaseSettingMenu-style" v-bind:style="WorCaseSettingMenuStyle">
         <!-- 标题 -->
         <div class="header-style">

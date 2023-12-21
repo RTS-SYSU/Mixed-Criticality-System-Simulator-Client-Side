@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 
-            Header: 头信息
+            Header: 头信息/表格头部
         -->
         <div class="header-style">
             <span class="font-style border-style">Static Task Id</span>

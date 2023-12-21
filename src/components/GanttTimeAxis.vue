@@ -1,4 +1,5 @@
 <template>
+    <!-- 甘特图时间轴 -->
     <div class="chart-row" :style="columnNumbers">
         <span class="chart-item" style="width: 120px;"></span>
         <!-- 创建时间项（即横坐标）-->

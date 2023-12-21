@@ -1,4 +1,7 @@
 <template>
+    <!-- 
+        一个任务的具体信息。
+     -->
     <div>
         <div class="content-style" v-on="contentEvent">
             <span ref="content1" class="font-style border-style" >{{ taskInformation.staticId }}</span>
@@ -7,7 +10,10 @@
             <span ref="content4" class="font-style border-style" >{{ taskInformation.criticality }}</span>
             <span ref="content5" class="font-style border-style" >{{ taskInformation.releaseTime }}</span>
         </div>
-    
+
+        <!-- 
+            该任务在执行过程中访问的资源以及访问的时间点。
+         -->
         <div ref="resource-access-details" class="resource-access-details" v-bind:style="resourceDetailsStyle">
             <div class="grid-style">
                 <span class="font-style border-style" style="font-size: 18px;">Access Resource</span>

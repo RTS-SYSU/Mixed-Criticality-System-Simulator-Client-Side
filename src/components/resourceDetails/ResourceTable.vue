@@ -1,8 +1,11 @@
 <template>
+    <!-- 
+        资源信息表格
+     -->
     <div>
         <div class="resource-information" v-bind:style="calculateHeight()">
             <!-- 
-                Header: 头信息
+                Header: 头信息/标题信息
             -->
             <div class="header-style">
                 <span class="font-style border-style">Resource id</span>
