@@ -48,3 +48,36 @@
 - 在控制台中运行`npm install`命令安装依赖项。
 - 在控制台中运行`npm run serve`命令运行代码。
 - 点击控制台中显示的网址即可访问混合关键系统模拟工具的前端界面。
+
+# 前后端整合
+
+若想要将前端代码和后端代码整合成一个应用，按以下步骤执行：
+
+- 控制台在前端代码文件夹路径中执行命令`npm run electron:build`，将前端界面打包成一个应用并存储在`dist_electron`文件夹中。
+
+- 使用`IDEA`打开后端代码文件夹，使用`Maven`插件将项目打包成`jar`包，存储在`target`文件夹中。
+
+- 复制打包好的`jar`包`serve-side-0.0.1-SNAPSHOT.jar`到前端代码文件夹下的`dist_electron`文件夹中。
+
+- 往`dist_electron`文件夹中创建`Simulator.bat`文件，写入以下内容，然后运行即可。
+
+  ```bat
+      start "serve" javaw -jar serve-side-0.0.1-SNAPSHOT.jar
+      
+      timeout /t 2
+      
+      @REM 开启前端界面
+      start "client" "client-side Setup 0.1.0.exe"
+      
+      @REM 等前端界面执行完再终止后端服务 
+      :WAIT_CLIENT
+      timeout /t 5 /nobreak >nul
+      tasklist | find "client-side.exe" 
+      echo %errorlevel%
+      if %errorlevel%==0 (
+          goto WAIT_CLIENT
+      )
+      taskkill /f /im "javaw.exe"
+  ```
+
+  
