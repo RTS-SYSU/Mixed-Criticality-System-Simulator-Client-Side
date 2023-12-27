@@ -53,10 +53,17 @@
         <div class="item" ref="protocolPWLP">
             <span class="informationStyle"> PWLP 协议调度情况</span>
             <!-- 打勾：在该协议下能够进行调度 -->
-            <svg class="symbol-style">
+            <svg class="symbol-style" v-if="pwlpSchedulable">
                 <rect x="0" y="0" width="50" height="50" fill="rgb(202, 249, 160)"></rect>
                 <line x1="12" y1="25" x2="25" y2="45" stroke="black" stroke-width="3"></line>
                 <line x1="25" y1="45" x2="45" y2="5" stroke="black" stroke-width="3"></line>
+            </svg>
+
+            <!-- 打叉：在协议下不能够进行调度 -->
+            <svg class="symbol-style" v-if="!pwlpSchedulable">
+                <rect x="0" y="0" width="50" height="50" fill="red"></rect>
+                <line x1="5" y1="5" x2="45" y2="45" stroke="black" stroke-width="3"></line>
+                <line x1="5" y1="45" x2="45" y2="5" stroke="black" stroke-width="3"></line>
             </svg>
 
             <!-- 按钮：点击查看调度信息 -->
