@@ -28,7 +28,7 @@
                         v-bind:key="index"
                         v-bind:task-information="taskInformations[item]"
                         v-bind:task-index="item"
-                        v-bind:taskInformationPageNow = "taskInsformationPageNow"
+                        v-bind:taskInformationPageNow = "taskInformationPageNow"
                         v-bind:maxItemSize = "maxItemSize"
                         ref="task-information"></TaskInformation>
                 </template>
