@@ -36,7 +36,7 @@
         </div>
 
         <!-- 翻页 -->
-        <div class="taskInformationPageFlipStyle" v-if="taskInformationTotalPageSize > 0">
+        <div class="taskInformationPageFlipStyle" v-if="taskInformationTotalPageSize > 1">
             <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
             <span class="flip-span">{{ (taskInformationPageNow + 1) + " / " + (this.taskInformationTotalPageSize)}}</span>
             <button @click="clickPageUp()" v-on="buttonEvent">{{ '&gt;' }}</button>

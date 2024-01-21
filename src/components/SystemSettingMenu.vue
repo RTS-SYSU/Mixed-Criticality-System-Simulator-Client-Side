@@ -294,11 +294,12 @@
 
             // 确认更改配置
             ClickTheAdjustSettingButton : function() {
+
                 // 发布事件
-                this.$bus.$emit('AdjustSystemSetting', this.tmpTotalCPUNum, this.tmpNumberOfTaskInAPartition, 
-                        this.tmpMinPeriod, this.tmpMaxPeriod, this.tmpNumberOfMaxAccessToOneResource, 
-                        this.tmpResourceSharingFactor, this.tmpResourceType, this.tmpResourceNum,
-                        this.tmpIsStartUpSwitch, this.tmpIsAutomaticallySwitch, this.tmpCriticalitySwitchTime)
+                this.$bus.$emit('AdjustSystemSetting', Number(this.tmpTotalCPUNum), Number(this.tmpNumberOfTaskInAPartition), 
+                        Number(this.tmpMinPeriod), Number(this.tmpMaxPeriod), Number(this.tmpNumberOfMaxAccessToOneResource), 
+                        Number(this.tmpResourceSharingFactor), this.tmpResourceType, this.tmpResourceNum,
+                        this.tmpIsStartUpSwitch, this.tmpIsAutomaticallySwitch, Number(this.tmpCriticalitySwitchTime))
                 
                 // 关闭窗口
                 this.$el.style.display = 'none'

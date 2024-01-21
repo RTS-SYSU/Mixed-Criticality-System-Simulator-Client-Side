@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="resourceInformationPageFlipStyle" v-if="resourceInformationTotalPageSize > 0">
+        <div class="resourceInformationPageFlipStyle" v-if="resourceInformationTotalPageSize > 1">
             <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
             <span class="flip-span">{{ (resourceInformationPageNow + 1) + " / " + (this.resourceInformationTotalPageSize)}}</span>
             <button @click="clickPageUp()" v-on="buttonEvent">{{ '&gt;' }}</button>
@@ -101,9 +101,6 @@
         computed : {
             resourceInformationTotalPageSize : function() {
                 var ret = Math.ceil(this.resourceInformations.length / this.maxItemSize)
-                if (this.resourceInformations.length % this.maxItemSize == 0) {
-                    ret = ret - 1;
-                }
                 return ret;
             },
 

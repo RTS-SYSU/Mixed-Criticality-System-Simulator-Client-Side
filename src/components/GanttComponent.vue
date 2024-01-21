@@ -244,9 +244,6 @@
             // 任务信息表格所需要的页数
             taskInformationTotalPageSize : function() {
                 var ret = Math.ceil(this.taskInformations.length / this.taskInformationTableMaxItemSize)
-                if (this.taskInformations.length % this.taskInformationTableMaxItemSize == 0) {
-                    ret = ret - 1;
-                }
                 return ret;
             }
         },
@@ -429,6 +426,7 @@
             this.$bus.$on('AdjustSystemSetting', (tmpTotalCPUNum, tmpNumberOfTaskInAPartition, tmpMinPeriod, tmpMaxiPeriod, 
                         tmpNumberOfMaxAccessToOneResource, tmpResourceSharingFactor, tmpResourceType, tmpResourceNum,
                         tmpIsStartUpSwitch, tmpIsAutomaticallySwitch, tmpCriticalitySwitchTime)=>{
+                
                 this.totalCPUNum = tmpTotalCPUNum
                 this.NumberOfTaskInAPartition = tmpNumberOfTaskInAPartition
                 this.minPeriod = tmpMinPeriod
