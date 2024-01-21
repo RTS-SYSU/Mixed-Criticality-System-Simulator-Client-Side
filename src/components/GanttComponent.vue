@@ -67,7 +67,7 @@
                     9. isAutomaticallySwitch : 是否自动发生关键级切换
                     10. criticalitySwitchTime : 关键级切换发生的时间点
              -->
-            <button class="button-style" v-on:click="ShowSystemSettingMenu()"> 配置模拟工具运行参数 </button>
+            <button class="button-style" v-on:click="ShowSystemSettingMenu()"> 配置工具运行参数 </button>
             <SystemSettingMenu v-bind:totalCPUNum="totalCPUNum" v-bind:NumberOfTaskInAPartition="NumberOfTaskInAPartition"
                             v-bind:minPeriod="minPeriod" v-bind:maxPeriod="maxPeriod" v-bind:numberOfMaxAccessToOneResource="numberOfMaxAccessToOneResource"
                             v-bind:resourceSharingFactor="resourceSharingFactor" v-bind:resourceType="resourceType"
@@ -80,7 +80,7 @@
                 模拟器运行按钮：
                 点击模拟一组新任务的执行
             -->
-            <button class="button-style" v-on:click="StartSimulation()"> 模拟器开始运行 </button>
+            <button class="button-style" v-on:click="StartSimulation()"> 开始运行 </button>
         </div>
         
         <!-- 
