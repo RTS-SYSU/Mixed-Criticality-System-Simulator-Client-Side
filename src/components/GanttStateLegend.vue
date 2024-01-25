@@ -154,10 +154,6 @@
                         stateStyle : 'direct-spinning'
                     },
                     {
-                        state : 'Help task to access resource',
-                        stateStyle : 'help-direct-spinning'
-                    },
-                    {
                         state : 'Indirect Spinning',
                         stateStyle : 'indirect-spinning'
                     },
@@ -168,6 +164,10 @@
                     {
                         state : 'Access Resource',
                         stateStyle : 'access-resource'
+                    },
+                    {
+                        state : 'Help task to access resource',
+                        stateStyle : 'help-direct-spinning'
                     },
                     {
                         state : 'Access Resource(Immigrate)',
