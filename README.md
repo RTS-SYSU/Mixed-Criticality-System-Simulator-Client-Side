@@ -45,7 +45,7 @@
 
 - 从本仓库下载代码至本地。
 - 进入`Mixed-Criticality-System-Simulator-Client-Side`文件夹。
-- 在控制台中运行`npm install`命令安装依赖项。
+- 在控制台中运行`npm install`命令安装依赖项（终端需要以管理员身份运行）。
 - 在控制台中运行`npm run serve`命令运行代码。
 - 点击控制台中显示的网址即可访问混合关键系统模拟工具的前端界面。
 
