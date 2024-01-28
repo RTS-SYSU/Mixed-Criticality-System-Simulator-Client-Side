@@ -16,6 +16,7 @@
 
         <!-- 任务甘特图翻页 -->
         <taskPageFlip
+                v-if="taskTotalPageSize > 1"
                 v-bind:taskPageNow="taskPageNow"
                 v-bind:taskTotalPageSize="taskTotalPageSize"/>
     </div>

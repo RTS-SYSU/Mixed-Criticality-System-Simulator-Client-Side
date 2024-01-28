@@ -96,8 +96,7 @@
             // 设计访问资源的详细信息
             resourceDetailsStyle : function() {
                 return {
-                    'height' : ((1 + this.taskInformation.resourceAccessTime.length) * 40) + 2 + 'px',
-                    'top' : 20 + 194 + 20 + 40 + (this.taskIndex - this.taskInformationPageNow * this.maxItemSize) * 42 +'px'
+                    'top' : 20 + 194 + 20 + 42 + (this.taskIndex - this.taskInformationPageNow * this.maxItemSize) * 42 +'px'
                 }
             }
         },
@@ -171,9 +170,6 @@
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
     
     .content-style {
         /* 网格化布局 */
@@ -225,7 +221,7 @@
         /* 使用绝对定位定位到页面中间 */
         position: absolute;
 
-        left: 507px;
+        left: 505px;
 
         background-color: white;
         width: 400px;
@@ -245,6 +241,5 @@
 
         grid-template-columns: 45% 55%;
 
-        height: 40px;
     }
 </style>

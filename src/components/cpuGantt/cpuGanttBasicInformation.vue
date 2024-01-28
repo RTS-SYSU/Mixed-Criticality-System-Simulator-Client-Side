@@ -5,7 +5,7 @@
         <!-- CPU ID :  -->
         <div class="chart-item" v-for="(item, index) in this.range(cpuPageNow * maxItemSize, Math.min((cpuPageNow + 1) * maxItemSize, totalItemNum))" v-bind:key="index">{{ "CPU ID : " + item }}</div>
         <!-- cpuPageFlip : 翻页功能 -->
-        <cpuPageFlip v-bind:cpuPageNow="cpuPageNow" v-bind:cpuTotalPageSize="cpuTotalPageSize"/>
+        <cpuPageFlip v-if="cpuTotalPageSize > 1" v-bind:cpuPageNow="cpuPageNow" v-bind:cpuTotalPageSize="cpuTotalPageSize"/>
     </div>
 </template>
 
