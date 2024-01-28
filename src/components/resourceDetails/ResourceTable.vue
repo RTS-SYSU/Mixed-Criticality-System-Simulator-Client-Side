@@ -147,10 +147,6 @@
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
-
     .header-style {
         /* 网格化布局 */
         display: grid;
@@ -191,7 +187,7 @@
         display: block;
 
         /* 设置其为父组件宽度的 20 % */
-        width: 487px;
+        width: 485px;
         /* 高度设置成自理 */
         height: 100%;
 
