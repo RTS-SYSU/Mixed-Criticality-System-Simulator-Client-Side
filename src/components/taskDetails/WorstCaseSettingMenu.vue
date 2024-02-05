@@ -5,7 +5,7 @@
     <div class="WorstCaseSettingMenu-style" v-bind:style="WorCaseSettingMenuStyle">
         <!-- 标题 -->
         <div class="header-style">
-            <span> 最坏运行情况配置菜单 </span>
+            <span> 较坏运行情况配置菜单 </span>
             <!-- ❌ -->
             <svg class="symbol-style" v-on:click="CloseWorstCaseSettingMenu" v-on:mouseover="hoverSymbol" v-on:mouseout="resetSymbol">
                     <!-- 绘制圆圈 -->

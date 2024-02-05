@@ -5,7 +5,7 @@
     <div class="SystemSettingMenu-style" v-bind:style="calculateHeight">
         <!-- 标题 -->
         <div class="header-style">
-            <span> 模拟工具运行环境配置菜单 </span>
+            <span> 工具运行环境配置菜单 </span>
             <!-- ❌ -->
             <svg class="symbol-style" v-on:click="CloseSystemSettingMenu" v-on:mouseover="hoverSymbol" v-on:mouseout="resetSymbol">
                     <!-- 绘制圆圈 -->
