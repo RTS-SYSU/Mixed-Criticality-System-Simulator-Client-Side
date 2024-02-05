@@ -1,11 +1,8 @@
 <template>
-    <!-- 
-        资源信息表格
-     -->
     <div>
         <div class="resource-information" v-bind:style="calculateHeight()">
             <!-- 
-                Header: 头信息/标题信息
+                Header: 头信息
             -->
             <div class="header-style">
                 <span class="font-style border-style">Resource id</span>
@@ -33,7 +30,7 @@
             </div>
         </div>
 
-        <div class="resourceInformationPageFlipStyle" v-if="resourceInformationTotalPageSize > 1">
+        <div class="resourceInformationPageFlipStyle" v-if="resourceInformationTotalPageSize > 0">
             <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
             <span class="flip-span">{{ (resourceInformationPageNow + 1) + " / " + (this.resourceInformationTotalPageSize)}}</span>
             <button @click="clickPageUp()" v-on="buttonEvent">{{ '&gt;' }}</button>
@@ -101,6 +98,9 @@
         computed : {
             resourceInformationTotalPageSize : function() {
                 var ret = Math.ceil(this.resourceInformations.length / this.maxItemSize)
+                if (this.resourceInformations.length % this.maxItemSize == 0) {
+                    ret = ret - 1;
+                }
                 return ret;
             },
 
@@ -132,7 +132,7 @@
 
             calculateHeight() {
                 return {
-                    'height' : (Math.min(this.resourceInformations.length - this.resourceInformationPageNow * this.maxItemSize, this.maxItemSize) * 42 + 42 + 30) + 'px'
+                    'height' : (Math.min(this.resourceInformations.length - this.resourceInformationPageNow * this.maxItemSize, this.maxItemSize) * 42 + 42) + 'px'
                 }
             },
             range(start, end) {
@@ -147,15 +147,12 @@
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
 
     .header-style {
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 200px 142.5px 142.5px 200px;
+        grid-template-columns: 150px 90px 90px 190px;
     }
 
     .font-style {
@@ -191,7 +188,7 @@
         display: block;
 
         /* 设置其为父组件宽度的 20 % */
-        width: 487px;
+        width: 520px;
         /* 高度设置成自理 */
         height: 100%;
 

@@ -168,7 +168,7 @@
     .cpuGanttStyle{
         display: flex;
 
-        width: 1500px;
+        width: 1400px;
 
         /* 设置外围边框样式 */
         /* 边框大小：border-width: top right bottom left, 按顺时针依次作用 */

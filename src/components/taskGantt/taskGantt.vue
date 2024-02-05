@@ -147,7 +147,7 @@
     /* 和上方组件保持 20px 之间的距离 */
     .taskGanttStyle {
         display : flex;
-        width : 1500px;
+        width : 1400px;
         margin-top: 20px;
         
         /* 设置外围边框样式 */

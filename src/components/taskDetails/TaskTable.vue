@@ -1,11 +1,8 @@
 <template>
-    <!-- 
-        任务信息表格
-     -->
     <div>
         <div class="task-information" v-bind:style="calculateHeight()">
             <!-- 
-                Header: 头信息/标题信息
+                Header: 头信息
             -->
             <div class="header-style">
                 <span class="font-style border-style">Task id</span>
@@ -35,8 +32,7 @@
             </div>
         </div>
 
-        <!-- 翻页 -->
-        <div class="taskInformationPageFlipStyle" v-if="taskInformationTotalPageSize > 1">
+        <div class="taskInformationPageFlipStyle" v-if="taskInformationTotalPageSize > 0">
             <button style="margin-left:10px;" @click="clickPageDown()" v-on="buttonEvent">{{ '&lt;' }}</button>
             <span class="flip-span">{{ (taskInformationPageNow + 1) + " / " + (this.taskInformationTotalPageSize)}}</span>
             <button @click="clickPageUp()" v-on="buttonEvent">{{ '&gt;' }}</button>
@@ -145,15 +141,12 @@
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
 
     .header-style {
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 122.5px 122.5px 120px 120px 155px 155px 155px 122.5px 122.5px;
+        grid-template-columns: 95px 125px 100px 120px 122px 130px 122px 80px 130px;
     }
 
     .font-style {
@@ -189,7 +182,7 @@
         display: block;
 
         /* 设置其为父组件宽度的 20 % */
-        width: 487px;
+        width: 562px;
         /* 高度设置成自理 */
         height: 100%;
 

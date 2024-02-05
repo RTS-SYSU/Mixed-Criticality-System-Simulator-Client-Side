@@ -20,7 +20,7 @@
                     2. mrspSchedulable ：MrsP资源共享协议的可调度性
                     3. pwlpSchedulable ：PWLP资源共享协议的可调度性
              -->
-            <IsSchedulable v-bind:msrpSchedulable="msrpSchedulable" v-bind:mrspSchedulable="mrspSchedulable" v-bind:pwlpSchedulable="pwlpSchedulable"/>
+            <IsSchedulable v-bind:msrpSchedulable="msrpSchedulable" v-bind:mrspSchedulable="mrspSchedulable" v-bind:pwlpSchedulable="pwlpSchedulable" v-bind:dynamicSchedulable="dynamicSchedulable"/>
 
             <!-- 
                 2. TaskTable 组件：展示任务信息
@@ -67,7 +67,7 @@
                     9. isAutomaticallySwitch : 是否自动发生关键级切换
                     10. criticalitySwitchTime : 关键级切换发生的时间点
              -->
-            <button class="button-style" v-on:click="ShowSystemSettingMenu()"> 配置模拟工具运行参数 </button>
+            <button class="button-style" v-on:click="ShowSystemSettingMenu()"> 配置工具运行参数 </button>
             <SystemSettingMenu v-bind:totalCPUNum="totalCPUNum" v-bind:NumberOfTaskInAPartition="NumberOfTaskInAPartition"
                             v-bind:minPeriod="minPeriod" v-bind:maxPeriod="maxPeriod" v-bind:numberOfMaxAccessToOneResource="numberOfMaxAccessToOneResource"
                             v-bind:resourceSharingFactor="resourceSharingFactor" v-bind:resourceType="resourceType"
@@ -197,6 +197,8 @@
                 mrspSchedulable : false,
                 // PWLP 资源共享协议的可调度性
                 pwlpSchedulable : true,
+                // 动态资源共享协议的可调度性
+                dynamicSchedulable : true,
 
                 // 是否开启关键级切换功能
                 isStartUpSwitch : false, 
@@ -244,6 +246,9 @@
             // 任务信息表格所需要的页数
             taskInformationTotalPageSize : function() {
                 var ret = Math.ceil(this.taskInformations.length / this.taskInformationTableMaxItemSize)
+                if (this.taskInformations.length % this.taskInformationTableMaxItemSize == 0) {
+                    ret = ret - 1;
+                }
                 return ret;
             }
         },
@@ -296,6 +301,7 @@
                         this.msrpSchedulable = response.data.msrpSchedulable
                         this.mrspSchedulable = response.data.mrspSchedulable
                         this.pwlpSchedulable = response.data.pwlpSchedulable
+                        this.dynamicSchedulable = response.data.dynamicSchedulable
                         this.taskInformations = response.data.taskInformations
                         this.taskGanttInformations = response.data.taskGanttInformations
                         this.cpuGanttInformations = response.data.cpuGanttInformations
@@ -419,6 +425,19 @@
                             console.log('error', error.message)
                         }
                     )
+                }else if (_protocalName == 'dynamic') {
+                    // 动态资源共享协议
+                    this.$axios.post(address).then(
+                        response => {
+                            this.dynamicSchedulable = response.data.schedulable
+                            this.cpuGanttInformations = response.data.totalInformation.cpuGanttInformations
+                            this.taskGanttInformations = response.data.totalInformation.taskGanttInformations
+                            this.criticalitySwitchTime = response.data.totalInformation.criticalitySwitchTime
+                        },
+                        error => {
+                            console.log('error', error.message)
+                        }
+                    )
                 }
             })
 
@@ -426,7 +445,6 @@
             this.$bus.$on('AdjustSystemSetting', (tmpTotalCPUNum, tmpNumberOfTaskInAPartition, tmpMinPeriod, tmpMaxiPeriod, 
                         tmpNumberOfMaxAccessToOneResource, tmpResourceSharingFactor, tmpResourceType, tmpResourceNum,
                         tmpIsStartUpSwitch, tmpIsAutomaticallySwitch, tmpCriticalitySwitchTime)=>{
-                
                 this.totalCPUNum = tmpTotalCPUNum
                 this.NumberOfTaskInAPartition = tmpNumberOfTaskInAPartition
                 this.minPeriod = tmpMinPeriod
@@ -496,11 +514,11 @@
 
     .gantt-chart {
         box-sizing: content-box;
-        width : 1500px;
+        width : 1400px;
         height: 100%;
         display: block;
 
-        margin-left: 20px;
+        margin-left: 35px;
         margin-top : 20px;
 
         /* 创建层叠上下文：比task-information小 */
@@ -512,7 +530,7 @@
         width: 400px;
 
         /* 设置其于左边元素之间的间隔 */
-        margin-left: 25px;
+        margin-left: 35px;
 
         margin-top : 20px;
 
@@ -522,14 +540,17 @@
     }
 
     .block-leftmost {
-        display : block;
-        width : 487px;
+        display : flex;
+        width : 562px;
         height: 100%;
         /* 创建层叠上下文 */
         z-index: 10;
 
         margin-top: 20px;
         margin-left: 20px;
+
+        flex-direction: column;
+        align-items: center;
     }
 
     /* 按钮样式 */
@@ -552,7 +573,7 @@
         /* 水平方向上居中 */
         margin: 0 auto; 
         line-height: 0px;
-        margin-top: 10px;
+        margin-top: 20px;
     }
 
     .button-style:hover {

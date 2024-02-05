@@ -20,11 +20,13 @@
             <div class="grid-style">
                 <span class="font-style border-style" style="font-size: 18px;">Access Resource</span>
                 <span class="font-style border-style" style="font-size: 18px;">Access Resource Time</span>
+                <span class="font-style border-style" style="font-size: 18px;">Dynamic Boosted Priority</span>
             </div>
 
             <div class="grid-style" v-for="(resourceId, index) in taskInformation.resourceAccessIndex" v-bind:key="index">
                 <span class="font-style border-style" style="font-size: 18px;">{{ resourceId }}</span>
                 <span class="font-style border-style" style="font-size: 18px;">{{ taskInformation.resourceAccessTime[index] }}</span>
+                <span class="font-style border-style" style="font-size: 18px;">{{ taskInformation.resourceRequiredPriorities[index]==-1 ? 'Local Resource' : taskInformation.resourceRequiredPriorities[index]}}</span>
             </div>
         </div>
         
@@ -56,6 +58,7 @@
                         "releaseTime": 15,
                         "resourceAccessIndex" : [0, 1],
                         "resourceAccessTime" : [10, 20],
+                        "resourceRequiredPriorities" : [-1, -1]
                     }
                 }
             },
@@ -96,8 +99,7 @@
             // 设计访问资源的详细信息
             resourceDetailsStyle : function() {
                 return {
-                    'height' : ((1 + this.taskInformation.resourceAccessTime.length) * 40) + 2 + 'px',
-                    'top' : 20 + 194 + 20 + 40 + (this.taskIndex - this.taskInformationPageNow * this.maxItemSize) * 42 +'px'
+                    'top' : 20 + 250 + 4 + 20 + 42 + (this.taskIndex - this.taskInformationPageNow * this.maxItemSize) * 42 +'px'
                 }
             }
         },
@@ -145,7 +147,7 @@
                 }
 
                 // 然后再修改 style 让其显示出来
-                this.$refs['resource-access-details'].style.display = 'block';
+                this.$refs['resource-access-details'].style.display = 'grid';
 
                 // 停止冒泡事件的发生
                 event.stopPropagation();
@@ -171,15 +173,12 @@
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
     
     .content-style {
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 122.5px 122.5px 120px 120px 155px 155px 155px 122.5px 122.5px;
+        grid-template-columns: 95px 125px 100px 120px 122px 130px 122px 80px 130px;;
 
     }
 
@@ -225,10 +224,10 @@
         /* 使用绝对定位定位到页面中间 */
         position: absolute;
 
-        left: 507px;
+        left: 582px;
 
         background-color: white;
-        width: 400px;
+        width: 660px;
 
         /* 边框样式 */
         border-style: solid;
@@ -243,8 +242,6 @@
     .grid-style {
         display: grid;
 
-        grid-template-columns: 45% 55%;
-
-        height: 40px;
+        grid-template-columns: 175px 225px 260px;
     }
 </style>

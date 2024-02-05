@@ -1,21 +1,12 @@
 <template>
-    <!-- 
-        展示每一个资源的详细信息
-    -->
     <div>
-        <!-- 
-            显示资源的基本信息
-         -->
         <div class="content-style" v-on="contentEvent">
             <span ref="content1" class="font-style border-style" >{{ resourceInformation.resourceId }}</span>
             <span ref="content2" class="font-style border-style" >{{ resourceInformation.c_low }}</span>
             <span ref="content3" class="font-style border-style" >{{ resourceInformation.c_high }}</span>
             <span ref="content4" class="font-style border-style" >{{ resourceInformation.isGlobalResource }}</span>
         </div>
-
-        <!-- 
-            显示访问资源的所有任务
-         -->
+    
         <div ref="task-access-details" class="task-access-details" v-bind:style="taskDetailsStyle">
             <div class="grid-style">
                 <span class="font-style border-style" style="font-size: 18px;">Access Resource Task</span>
@@ -75,9 +66,10 @@
             },
 
             "taskInformationPageNow" : {
-                type : Number, 
-                default : 0
+                type : Number,
+                default : 2
             },
+
 
             "taskTableMaxItemSize" : {
                 type : Number,
@@ -99,10 +91,12 @@
 
             // 设计访问资源的详细信息
             taskDetailsStyle : function() {
-                let taskInformationTableHeight = Math.min(this.taskInformationLength - this.taskInformationPageNow * this.taskTableMaxItemSize, this.taskTableMaxItemSize) * 42 + 42 + 30 + 30
+                let taskInformationTableHeight = Math.min(this.taskInformationLength - this.taskInformationPageNow * this.taskTableMaxItemSize, this.taskTableMaxItemSize) * 42 + 42 + 30
+                if (this.taskInformationLength > this.taskTableMaxItemSize) {
+                    taskInformationTableHeight += 30
+                }
                 return {
-                    'height' : ((1 + this.resourceInformation.accessTasks.length) * 42) + 'px',
-                    'top' : 20 + 194 + 20 + taskInformationTableHeight + 20 + 40 + (this.resourceIndex - this.resourceInformationPageNow * this.maxItemSize) * 42 + 'px'
+                    'top' : 20 + 250 + 4 + 20 + taskInformationTableHeight + 20 + 2 + 42 + (this.resourceIndex - this.resourceInformationPageNow * this.maxItemSize) * 42  + 'px'
                 }
             }
         },
@@ -155,7 +149,7 @@
         /* 网格化布局 */
         display: grid;
 
-        grid-template-columns: 200px 142.5px 142.5px 200px;
+        grid-template-columns: 150px 90px 90px 190px;
     }
 
     /* .content-style:hover {
@@ -200,7 +194,7 @@
         /* 使用绝对定位定位到页面中间 */
         position: absolute;
 
-        left: 507px;
+        left: 561px;
 
         background-color: white;
         width: 250px;
@@ -217,8 +211,6 @@
     /* 资源访问的头部信息样式 */
     .grid-style {
         display: grid;
-
-        height: 42px;
 
         grid-template-columns: 100%;
     }
