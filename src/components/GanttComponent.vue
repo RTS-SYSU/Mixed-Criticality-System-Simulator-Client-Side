@@ -209,11 +209,11 @@
                 // 模拟器运行配置信息
                 totalCPUNum : 2, 
                 NumberOfTaskInAPartition : 2,
-                minPeriod : 10,
+                minPeriod : 100,
                 maxPeriod : 1000, 
                 numberOfMaxAccessToOneResource : 2,
                 resourceSharingFactor : 0.50,
-                resourceType : "SHORT LENGTH",
+                resourceType : "VERY SHORT LENGTH",
                 resourceNum : "PARTITIONS",
 
                 // 显示资源信息
