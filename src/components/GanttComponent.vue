@@ -75,6 +75,12 @@
                             v-bind:isAutomaticallySwitch="isAutomaticallySwitch"
                             v-bind:criticalitySwitchTime="criticalitySwitchTime"></SystemSettingMenu>
 
+            <!-- 
+                历史记录按钮：
+                点击查看历史记录
+            -->
+            <button class="button-style" v-on:click="ShowHistoryMenu()"> 历史记录 </button>
+            <HistoryMenu v-bind:HistoryRecords="HistoryRecords"></HistoryMenu>
 
             <!-- 
                 模拟器运行按钮：
@@ -127,6 +133,7 @@
     import IsSchedulable from './IsSchedulable.vue'
     import SystemSettingMenu from './SystemSettingMenu.vue'
     import ResourceTable from './resourceDetails/ResourceTable.vue'
+    import HistoryMenu from './HistoryMenu.vue'
 
     // 在组件当中，data 必须为函数
     export default {
@@ -140,7 +147,8 @@
             TaskTable: TaskTable,
             IsSchedulable : IsSchedulable,
             SystemSettingMenu : SystemSettingMenu,
-            ResourceTable : ResourceTable
+            ResourceTable : ResourceTable,
+            HistoryMenu : HistoryMenu
         },
 
 
@@ -238,7 +246,10 @@
                 // taskInformationPageNow: 当前页数（由于任务信息表格可能无法一次性显示所有任务，因此采用分页显示）
                 taskInformationPageNow : 0,
                 // taskTableMaxItemSize: 任务信息表格一次最多显示的任务个数
-                taskInformationTableMaxItemSize : 7
+                taskInformationTableMaxItemSize : 7,
+
+                // 历史记录
+                HistoryRecords : ["Empty History Record!"]
             }
         },
 
@@ -311,6 +322,21 @@
                         console.log('error', error.message)
                     }
                 )
+                console.log("StartSimulation")
+            },
+
+            // 弹出历史记录：
+            ShowHistoryMenu() {
+                this.$axios.get("http://localhost:8080/api/getAllHistoryRecords").then(
+                        response => {
+                            this.HistoryRecords = response.data
+                            console.log(this.HistoryRecords)
+                        },
+                        error => {
+                            console.log('error', error.message)
+                        }
+                    )
+                this.$bus.$emit('ShowHistoryMenu')
             }
         },
 
@@ -364,14 +390,15 @@
                 var address = `http://localhost:8080/api/${protocalName}?isStartUpSwitch=${this.isStartUpSwitch}&criticalitySwitchTime=${this.criticalitySwitchTime}` 
                 this.$axios.post(address).then(
                     response => {
-                        this.cpuGanttInformations = response.data.cpuGanttInformations
                         this.taskGanttInformations = response.data.taskGanttInformations
-                        this.criticalitySwitchTime = response.data.criticalitySwitchTime
+                        this.cpuGanttInformations = response.data.cpuGanttInformations
+                        this.resourceInformations = response.data.resourceInformations
                     },
                     error => {
                         console.log('error', error.message)
                     }
                 )
+                console.log("getGanttChart")
             })
 
             // 绑定自定义事件 --> 查看某一个任务的较差运行情况
@@ -460,6 +487,27 @@
 
                 if (this.isAutomaticallySwitch)
                     this.criticalitySwitchTime = -1
+            })
+
+            // 绑定自定义事件：--> 导入指定历史记录：
+            this.$bus.$on('ImportHistory', (selectedHistoryRecord)=>{
+                var address = `http://localhost:8080/api/importHistoryRecord?filename=${selectedHistoryRecord}`
+                this.$axios.post(address).then(
+                        response => {
+                            this.msrpSchedulable = response.data.msrpSchedulable
+                            this.mrspSchedulable = response.data.mrspSchedulable
+                            this.pwlpSchedulable = response.data.pwlpSchedulable
+                            this.dynamicSchedulable = response.data.dynamicSchedulable
+                            this.taskInformations = response.data.taskInformations
+                            this.taskGanttInformations = response.data.taskGanttInformations
+                            this.cpuGanttInformations = response.data.cpuGanttInformations
+                            this.resourceInformations = response.data.resourceInformations
+                        },
+                        error => {
+                            console.log('error', error.message)
+                        }
+                    )
+                console.log("ImportHistory")
             })
 
             // TaskTable 翻页

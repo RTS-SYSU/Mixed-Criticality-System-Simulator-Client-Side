@@ -164,11 +164,15 @@ import SwitchButton from './SwitchButton.vue'
 
             // 点击 “查看该任务的较差运行情况”
             ClickTheWorstCaseButton : function() {
-                // 发布 WorstCaseSetting 事件
-                this.$bus.$emit('WorstCaseSetting', this.sufferTaskId, this.resourceAccessProtocol, this.isStartUpSwitch, this.isAutomaticallySwitch, this.criticalitySwitchTime)
-
-                // 关闭窗口
-                this.$el.style.display = 'none'
+                if (this.criticalitySwitchTime >= 0) {
+                    // 发布 WorstCaseSetting 事件
+                    this.$bus.$emit('WorstCaseSetting', this.sufferTaskId, this.resourceAccessProtocol, this.isStartUpSwitch, this.isAutomaticallySwitch, this.criticalitySwitchTime)
+                    // 关闭窗口
+                    this.$el.style.display = 'none'
+                }else {
+                    alert('关键级切换时间必须大于或等于0！')
+                    this.criticalitySwitchTime = 0
+                }
             }
         }
     }
@@ -237,6 +241,8 @@ import SwitchButton from './SwitchButton.vue'
     .option-style {
         width: 400px;
         height: 40px;
+        display: flex;
+        align-items: center;
     }
 
     .input-style {

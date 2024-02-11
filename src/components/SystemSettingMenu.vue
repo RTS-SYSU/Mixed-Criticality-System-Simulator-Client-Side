@@ -294,7 +294,55 @@
 
             // 确认更改配置
             ClickTheAdjustSettingButton : function() {
+                if (this.tmpTotalCPUNum < 1) {
+                    alert('处理器核心数必须大于或等于1！')
+                    this.tmpTotalCPUNum = 2
+                    return 
+                }
 
+                if (this.tmpNumberOfTaskInAPartition < 1) {
+                    alert('处理器上平均分配的任务个数必须大于或等于1！')
+                    this.tmpNumberOfTaskInAPartition = 1
+                    return 
+                }
+
+                if (this.tmpMinPeriod < 10) {
+                    alert('任务最短周期必须大于或等于10！')
+                    this.tmpMinPeriod = 10
+                    return 
+                }
+
+                if (this.tmpMaxPeriod < 50) {
+                    alert('任务最长周期必须大于或等于50！')
+                    this.tmpMaxPeriod = 1000
+                    return 
+                }
+
+                if (this.tmpMinPeriod > this.tmpMaxPeriod) {
+                    alert('任务最长周期必须大于或等于任务最短周期！')
+                    this.tmpMinPeriod = 10
+                    this.tmpMaxPeriod = 1000
+                    return 
+                }
+
+                if (this.tmpNumberOfMaxAccessToOneResource < 0) {
+                    alert('任务访问同一资源的最大次数必须大于或等于0！')
+                    this.tmpNumberOfMaxAccessToOneResource = 2;
+                    return 
+                }
+
+                if (this.tmpResourceSharingFactor > 1 || this.tmpResourceSharingFactor < 0) {
+                    alert('访问资源的任务的比例的取值范围为[0, 1]!')
+                    this.tmpResourceSharingFactor = 0.5;
+                    return 
+                }
+
+                if (this.tmpCriticalitySwitchTime < 0) {
+                    alert('关键级切换时间必须大于或等于0！')
+                    this.tmpCriticalitySwitchTime = 0
+                    return 
+                }
+                
                 // 发布事件
                 this.$bus.$emit('AdjustSystemSetting', Number(this.tmpTotalCPUNum), Number(this.tmpNumberOfTaskInAPartition), 
                         Number(this.tmpMinPeriod), Number(this.tmpMaxPeriod), Number(this.tmpNumberOfMaxAccessToOneResource), 
@@ -420,6 +468,8 @@
     .option-style {
         width: 400px;
         height: 40px;
+        display: flex;
+        align-items: center;
     }
 
     .input-style {
