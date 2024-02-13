@@ -1,13 +1,13 @@
 <template>
     <!-- 
-        模拟工具运行环境配置菜单。
+        大规模测试。
      -->
-    <div class="SystemSettingMenu-style" v-bind:style="calculateHeight">
+    <div class="SchedulabilityTest-style" v-bind:style="calculateHeight">
         <!-- 标题 -->
         <div class="header-style">
-            <span> 模拟工具运行环境配置菜单 </span>
+            <span> 测试环境配置菜单 </span>
             <!-- ❌ -->
-            <svg class="symbol-style" v-on:click="CloseSystemSettingMenu" v-on:mouseover="hoverSymbol" v-on:mouseout="resetSymbol">
+            <svg class="symbol-style" v-on:click="CloseTestSchedulabilityMenu" v-on:mouseover="hoverSymbol" v-on:mouseout="resetSymbol">
                     <!-- 绘制圆圈 -->
                     <circle cx="15" cy="15" r="15" v-bind:stroke="circleAndLineColor" stroke-width="2" fill="none"/>
                     <!-- 绘制直线 -->
@@ -15,6 +15,15 @@
                     <!-- 绘制直线 -->
                     <line x1="4" y1="26" x2="26" y2="4" v-bind:stroke="circleAndLineColor" fill="none"/>
             </svg>
+        </div>
+
+        <!-- 分割线 -->
+        <hr style="border : 1px solid rgb(208, 211, 212); height : 1px;"/>
+
+        <!-- 测试数量 -->
+        <div class="option-style">
+            <span style="margin-left:10px;"> 测试数量： </span>
+            <input type="number" v-model="tmpTestNum" class="input-style" v-bind:style="AdjustInputWidth(tmpTestNum, 140)" min="1"/>
         </div>
 
         <!-- 分割线 -->
@@ -132,14 +141,14 @@
         <hr style="border : 1px solid rgb(208, 211, 212); height : 1px;" v-if="tmpIsStartUpSwitch && !tmpIsAutomaticallySwitch"/>
 
         <!-- 确认更改配置按钮 -->
-        <button class="button-style" v-on:click="ClickTheAdjustSettingButton">确认更改配置</button>
+        <button class="button-style" v-on:click="ClickTestButton">开始测试</button>
     </div>
 </template>
 
 <script>
     import SwitchButton from './taskDetails/SwitchButton.vue';
     export default {
-        name : "SystemSettingMenu",
+        name : "TestSchedulability",
 
         components  : {
             SwitchButton : SwitchButton
@@ -147,6 +156,9 @@
 
         data : function() {
             return {
+                // 测试数量
+                tmpTestNum : 1,
+
                 // CPU 个数
                 tmpTotalCPUNum : 2,
 
@@ -180,64 +192,6 @@
             }
         },
 
-        props : {
-            // 
-            totalCPUNum : {
-                type : Number,
-                default : 2
-            }, 
-
-            NumberOfTaskInAPartition : {
-                type : Number,
-                default : 2
-            },
-
-            minPeriod : {
-                type : Number,
-                default : 10
-            },
-
-            maxPeriod : {
-                type : Number, 
-                default : 1000
-            }, 
-
-            numberOfMaxAccessToOneResource : {
-                type : Number,
-                default : 2
-            },
-
-            resourceSharingFactor : {
-                type : Number,
-                default : 0.50
-            },
-
-            resourceType : {
-                type : String,
-                default : "SHORT LENGTH"
-            },
-
-            resourceNum : {
-                type : String,
-                default : "PARTITIONS"
-            },
-
-            isStartUpSwitch : {
-                type : Boolean,
-                default : true
-            },
-
-            isAutomaticallySwitch : {
-                type : Boolean,
-                default : true
-            },
-
-            criticalitySwitchTime : {
-                type : Number,
-                default : -1
-            }
-        },
-
         methods : {
             hoverSymbol() {
                 // 鼠标移入时改变颜色
@@ -247,26 +201,6 @@
             resetSymbol() {
                 // 鼠标移出时重置颜色
                 this.circleAndLineColor = 'rgb(208, 211, 212)';
-            },
-
-            // 关闭 SystemSettingMenu
-            CloseSystemSettingMenu : function(){
-                this.$el.style.display = 'none'
-
-                // 恢复一下值
-                this.tmpTotalCPUNum = this.totalCPUNum,
-                this.tmpNumberOfTaskInAPartition = this.NumberOfTaskInAPartition
-                this.tmpMinPeriod = this.minPeriod
-                this.tmpMaxPeriod = this.maxPeriod
-                this.tmpNumberOfMaxAccessToOneResource = this.numberOfMaxAccessToOneResource
-                this.tmpResourceSharingFactor = this.resourceSharingFactor
-                this.tmpResourceType = this.resourceType
-                this.tmpResourceNum = this.resourceNum
-                this.tmpIsStartUpSwitch = this.isStartUpSwitch
-                this.tmpIsAutomaticallySwitch = this.isAutomaticallySwitch
-                this.tmpCriticalitySwitchTime = this.criticalitySwitchTime
-
-                this.$bus.$emit('ShowTaskGantt')
             },
 
             // 根据阻塞时间的大小调整输入框大小
@@ -284,8 +218,21 @@
                 }
             },
 
+            // 关闭 Test-Schedulability
+            CloseTestSchedulabilityMenu : function() {
+                this.$el.style.display = 'none'
+
+                this.$bus.$emit('ShowTaskGantt')
+            },
+
             // 确认更改配置
-            ClickTheAdjustSettingButton : function() {
+            ClickTestButton : function() {
+                if (this.tmpTestNum < 1) {
+                    alert('测试数量必须大于或等于1！')
+                    this.tmpTestNum = 1
+                    return 
+                }
+
                 if (this.tmpTotalCPUNum < 1) {
                     alert('处理器核心数必须大于或等于1！')
                     this.tmpTotalCPUNum = 2
@@ -336,32 +283,31 @@
                 }
                 
                 // 发布事件
-                this.$bus.$emit('AdjustSystemSetting', Number(this.tmpTotalCPUNum), Number(this.tmpNumberOfTaskInAPartition), 
+                this.$bus.$emit('TestSchedulability', Number(this.tmpTestNum), Number(this.tmpTotalCPUNum), Number(this.tmpNumberOfTaskInAPartition), 
                         Number(this.tmpMinPeriod), Number(this.tmpMaxPeriod), Number(this.tmpNumberOfMaxAccessToOneResource), 
                         Number(this.tmpResourceSharingFactor), this.tmpResourceType, this.tmpResourceNum,
                         this.tmpIsStartUpSwitch, this.tmpIsAutomaticallySwitch, Number(this.tmpCriticalitySwitchTime))
                 
                 // 关闭窗口
                 this.$el.style.display = 'none'
-                this.$bus.$emit('ShowTaskGantt')
             }
          },
 
          mounted() {
-            // 绑定自定义事件 --> 显示出模拟器配置菜单
-            this.$bus.$on('ShowSystemSettingMenu', ()=>{
+            // 绑定自定义事件 --> 显示配置菜单
+            this.$bus.$on('ShowTestSchedulabilityMenu', ()=>{
                 this.$el.style.display = 'block'
             })
 
-            // 绑定自定义事件
-            this.$bus.$on('CloseSystemSettingMenu', ()=>{
+            // 绑定自定义事件 --> 关闭配置菜单
+            this.$bus.$on('CloseTestSchedulabilityMenu', ()=>{
                 this.$el.style.display = 'none'
             })
          },
 
          computed : {
             calculateHeight : function() {
-                let baseHeight = 586 + 58
+                let baseHeight = 586 + 58 + 58
                 if (this.tmpIsStartUpSwitch) {
                     baseHeight += 58;
                 }
@@ -384,7 +330,7 @@
         box-sizing: border-box;
     }
 
-    .SystemSettingMenu-style {
+    .SchedulabilityTest-style {
         background-color: white;
         position:absolute;
         width:380px;

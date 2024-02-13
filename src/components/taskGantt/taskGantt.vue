@@ -132,7 +132,15 @@
                 this.taskPageNow = Math.min(this.taskPageNow + 1, this.totalPageSize - 1)
             })
 
+            // 绑定隐藏事件：display = 'none'
+            this.$bus.$on('CloseTaskGantt', ()=>{
+                this.$el.style.display = 'none'
+            })
 
+            // 绑定隐藏事件：display = 'block'
+            this.$bus.$on('ShowTaskGantt', ()=>{
+                this.$el.style.display = 'flex'
+            })
         }
     }
 </script>

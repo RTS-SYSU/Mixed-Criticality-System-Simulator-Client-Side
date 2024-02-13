@@ -83,6 +83,19 @@
             <HistoryMenu v-bind:HistoryRecords="HistoryRecords"></HistoryMenu>
 
             <!-- 
+                大规模测试：
+                点击呈现大规模测试菜单
+            -->
+            <button class="button-style" v-on:click="ShowTestSchedulabilityMenu()"> 大规模测试 </button>
+            <TestSchedulabilityAtScale></TestSchedulabilityAtScale>
+            <TestSchedulabilityResult v-bind:msrp-schedulability-num="msrpSchedulabilityNum"
+                                    v-bind:mrsp-schedulability-num="mrspSchedulabilityNum"
+                                    v-bind:pwlp-schedulability-num="pwlpSchedulabilityNum"
+                                    v-bind:dynamic-schedulability-num="dynamicSchedulabilityNum"
+                                    v-bind:total-test-num="totalTestNum"></TestSchedulabilityResult>
+            <LoadingAnimation></LoadingAnimation>
+
+            <!-- 
                 模拟器运行按钮：
                 点击模拟一组新任务的执行
             -->
@@ -134,6 +147,9 @@
     import SystemSettingMenu from './SystemSettingMenu.vue'
     import ResourceTable from './resourceDetails/ResourceTable.vue'
     import HistoryMenu from './HistoryMenu.vue'
+    import TestSchedulabilityAtScale from './TestSchedulabilityAtScale.vue'
+    import TestSchedulabilityResult from './TestSchedulabilityResult.vue'
+    import LoadingAnimation from './LoadingAnimation.vue'
 
     // 在组件当中，data 必须为函数
     export default {
@@ -148,7 +164,10 @@
             IsSchedulable : IsSchedulable,
             SystemSettingMenu : SystemSettingMenu,
             ResourceTable : ResourceTable,
-            HistoryMenu : HistoryMenu
+            HistoryMenu : HistoryMenu,
+            TestSchedulabilityAtScale : TestSchedulabilityAtScale,
+            TestSchedulabilityResult : TestSchedulabilityResult,
+            LoadingAnimation : LoadingAnimation
         },
 
 
@@ -249,7 +268,14 @@
                 taskInformationTableMaxItemSize : 7,
 
                 // 历史记录
-                HistoryRecords : ["Empty History Record!"]
+                HistoryRecords : ["Empty History Record!"],
+
+                // 大规模测试结果
+                msrpSchedulabilityNum : 0,
+                mrspSchedulabilityNum : 0,
+                pwlpSchedulabilityNum : 0,
+                dynamicSchedulabilityNum : 0,
+                totalTestNum : 0
             }
         },
 
@@ -287,6 +313,12 @@
 
             // 点击按钮显示模拟器配置菜单
             ShowSystemSettingMenu() {
+                this.$bus.$emit('CloseHistoryMenu')
+                this.$bus.$emit('CloseTestSchedulabilityMenu')
+                this.$bus.$emit('CloseTestSchedulabilityResult')
+
+                this.$bus.$emit('CloseTaskGantt')
+
                 this.$bus.$emit('ShowSystemSettingMenu')
             },
 
@@ -330,13 +362,30 @@
                 this.$axios.get("http://localhost:8080/api/getAllHistoryRecords").then(
                         response => {
                             this.HistoryRecords = response.data
-                            console.log(this.HistoryRecords)
+                            
+                            this.$bus.$emit('CloseSystemSettingMenu')
+                            this.$bus.$emit('CloseTestSchedulabilityMenu')
+                            this.$bus.$emit('CloseTestSchedulabilityResult')
+
+                            this.$bus.$emit('CloseTaskGantt')
+                
+                            this.$bus.$emit('ShowHistoryMenu')
                         },
                         error => {
                             console.log('error', error.message)
                         }
                     )
-                this.$bus.$emit('ShowHistoryMenu')
+            },
+
+            // 弹出大规模测试：
+            ShowTestSchedulabilityMenu() {
+                this.$bus.$emit('CloseSystemSettingMenu')
+                this.$bus.$emit('CloseHistoryMenu')
+                this.$bus.$emit('CloseTestSchedulabilityResult')
+
+                this.$bus.$emit('CloseTaskGantt')
+
+                this.$bus.$emit('ShowTestSchedulabilityMenu')
             }
         },
 
@@ -488,6 +537,47 @@
                 if (this.isAutomaticallySwitch)
                     this.criticalitySwitchTime = -1
             })
+
+            // 绑定自定义事件：--> 进行大规模测试
+            this.$bus.$on('TestSchedulability', (tmpTestNum, tmpTotalCPUNum, tmpNumberOfTaskInAPartition, tmpMinPeriod, tmpMaxiPeriod, 
+                        tmpNumberOfMaxAccessToOneResource, tmpResourceSharingFactor, tmpResourceType, tmpResourceNum,
+                        tmpIsStartUpSwitch, tmpIsAutomaticallySwitch, tmpCriticalitySwitchTime)=>{
+                            if (tmpIsAutomaticallySwitch) {
+                                tmpCriticalitySwitchTime = -1
+                            }
+                            this.$axios.post('http://localhost:8080/api/testSchedulability', {
+                                testNum : tmpTestNum,
+                                configurationInformation : {
+                                    totalCPUNum : tmpTotalCPUNum,
+                                    numberOfTaskInAPartition : tmpNumberOfTaskInAPartition,
+                                    minPeriod : tmpMinPeriod,
+                                    maxPeriod : tmpMaxiPeriod,
+                                    numberOfMaxAccessToOneResource : tmpNumberOfMaxAccessToOneResource,
+                                    resourceSharingFactor : tmpResourceSharingFactor,
+                                    resourceType : tmpResourceType,
+                                    resourceNum : tmpResourceNum,
+                                    isStartUpSwitch : tmpIsStartUpSwitch,
+                                    criticalitySwitchTime : tmpCriticalitySwitchTime 
+                                }
+
+                            }).then(
+                                response => {
+                                    this.msrpSchedulabilityNum = response.data.msrpSchedulabilityNum
+                                    this.mrspSchedulabilityNum = response.data.mrspSchedulabilityNum
+                                    this.pwlpSchedulabilityNum = response.data.pwlpSchedulabilityNum
+                                    this.dynamicSchedulabilityNum = response.data.dynamicSchedulabilityNum
+                                    this.totalTestNum = response.data.totalNum
+                                    this.$bus.$emit('CloseLoadingAnimation')
+                                    this.$bus.$emit("ShowTestSchedulabilityResultMenu")
+                                },
+                                error => {
+                                    console.log('error', error.message)
+                                }
+                            )
+
+                            this.$bus.$emit('ShowLoadingAnimation')
+                        })
+
 
             // 绑定自定义事件：--> 导入指定历史记录：
             this.$bus.$on('ImportHistory', (selectedHistoryRecord)=>{

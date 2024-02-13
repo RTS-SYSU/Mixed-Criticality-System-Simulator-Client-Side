@@ -75,6 +75,8 @@
             // 关闭 worst-case-setting-menu
             CloseHistoryMenu : function() {
                 this.$el.style.display = 'none'
+
+                this.$bus.$emit('ShowTaskGantt')
             },
 
             hoverSymbol() {
@@ -97,6 +99,8 @@
                 }else if (this.selectedHistoryRecord == null && this.HistoryRecords.length > 0){
                     alert("错误：空历史记录!")
                 }
+
+                this.$bus.$emit('ShowTaskGantt')
             }
         },
 
@@ -104,6 +108,11 @@
             // 绑定自定义事件 --> 显示出历史记录菜单
             this.$bus.$on('ShowHistoryMenu', ()=>{
                 this.$el.style.display = 'block'
+            })
+
+            // 绑定自定义事件 --> 关闭历史记录菜单
+            this.$bus.$on('CloseHistoryMenu', ()=>{
+                this.$el.style.display = 'none'
             })
 
         }

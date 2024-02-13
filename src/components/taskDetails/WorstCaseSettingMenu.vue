@@ -171,7 +171,7 @@ import SwitchButton from './SwitchButton.vue'
                     this.$el.style.display = 'none'
                 }else {
                     alert('关键级切换时间必须大于或等于0！')
-                    this.criticalitySwitchTime = 0
+                    this.criticalitySwitchTime = -1
                 }
             }
         }
