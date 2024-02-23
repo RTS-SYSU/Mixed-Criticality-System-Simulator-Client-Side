@@ -5,7 +5,7 @@
     <div class="WorstCaseSettingMenu-style" v-bind:style="WorCaseSettingMenuStyle">
         <!-- 标题 -->
         <div class="header-style">
-            <span> 较坏运行情况配置菜单 </span>
+            <span> 不利运行情况配置菜单 </span>
             <!-- ❌ -->
             <svg class="symbol-style" v-on:click="CloseWorstCaseSettingMenu" v-on:mouseover="hoverSymbol" v-on:mouseout="resetSymbol">
                     <!-- 绘制圆圈 -->
@@ -71,7 +71,7 @@
         <hr style="border : 1px solid rgb(208, 211, 212); height : 1px;" v-if="isStartUpSwitch && !isAutomaticallySwitch"/>
 
         <!-- 查看某一个任务的较差运行情况 -->
-        <button class="button-style" v-on:click="ClickTheWorstCaseButton">查看最坏运行情况</button>
+        <button class="button-style" v-on:click="ClickTheWorstCaseButton">查看不利运行情况</button>
     </div>
 </template>
 
