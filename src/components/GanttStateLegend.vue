@@ -2,7 +2,7 @@
     甘特图图例信息：显示哪种颜色对应正在执行任务的状态
 -->
 <template>
-    <div class='legend-style' v-bind:style="{'height' :  ((stateRepresentations.length - 7) * 100 +  (7 * 60 + 20)) + 'px'}">
+    <div class='legend-style' v-bind:style="{'height' :  ((stateRepresentations.length - 7) * 80 +  (7 * 60 + 20)) + 'px'}">
 
         <template v-for="(stateRepresentation, index) in stateRepresentations">
             <!-- 
@@ -19,20 +19,20 @@
             <!-- 
                 locked: 成功获取到一个资源
             -->
-            <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'locked'">
+            <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'locked'">
                 <svg class="symbol-style">
                     <!-- 绘制圆圈 -->
-                    <circle cx="40" cy="20" r="10" stroke="black" stroke-width="3" fill="black"/>
+                    <circle cx="40" cy="15" r="10" stroke="black" stroke-width="3" fill="black"/>
                     <!-- 绘制直线 -->
-                    <line x1="40" y1="30" x2="40" y2="80" stroke="black" stroke-width="3" fill="none"/>
+                    <line x1="40" y1="25" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
                 </svg>
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 locked-attempt: 尝试去获取一个资源，但是该资源正在被使用
             -->
-            <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'locked-attempt'">
+            <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'locked-attempt'">
                 <svg class="symbol-style">
                     <!-- 创建一个 SVG 元素（lock attempt）-->
                         <!-- 
@@ -52,84 +52,97 @@
                                 z：将终点和起点连接起来，形成一个闭合的形状
                         -->
                         <!-- 左边黑色填充的半圆 -->
-                        <path d="M 40 30 A 10 10 0 1 1 40 10z" stroke="black" stroke-width="3" fill="black"/>
+                        <path d="M 40 25 A 10 10 0 1 1 40 5z" stroke="black" stroke-width="3" fill="black"/>
                         <!-- 右边白色无填充的半圆 -->
-                        <path d="M 40 10 A 10 10 0 1 1 40 30" stroke="black" stroke-width="3" fill="none"/>
+                        <path d="M 40 5 A 10 10 0 1 1 40 25" stroke="black" stroke-width="3" fill="none"/>
                         <!-- 直线 -->
-                        <line x1="40" y1="30" x2="40" y2="80" stroke="black" stroke-width="3" fill="none"/>
+                        <line x1="40" y1="25" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
                 </svg>
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
+            </div>
+
+            <!-- 
+                withdraw：任务撤销资源申请
+            -->
+            <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'withdraw'">
+                <svg class="symbol-style">
+                    <!-- 绘制圆圈 -->
+                    <circle cx="40" cy="15" r="10" stroke="#00a3ff" stroke-width="3" fill="#00a3ff"/>
+                    <!-- 绘制直线 -->
+                    <line x1="40" y1="25" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
+                </svg>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 locked-attempt: 尝试去获取一个资源，但是该资源正在被使用
             -->
-            <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'unlocked'">
+            <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'unlocked'">
                  <svg class="symbol-style">
-                    <circle cx="40" cy="20" r="10" stroke="black" stroke-width="3" fill="none"/>
+                    <circle cx="40" cy="15" r="10" stroke="black" stroke-width="3" fill="none"/>
                     <!-- 绘制直线 -->
-                    <line x1="40" y1="30" x2="40" y2="80" stroke="black" stroke-width="3" fill="none"/>
+                    <line x1="40" y1="25" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
                 </svg>
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 release: 一个任务的发布
              -->
-            <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'release'">
+            <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'release'">
                  <svg class="symbol-style">
                     <!-- 绘制直线 -->
-                    <line x1="40" y1="30" x2="40" y2="80" stroke="black" stroke-width="3" fill="none"/>
+                    <line x1="40" y1="25" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
                     <!-- 绘制三角形 -->
-                    <path d="M 40 10 L 30 30 L 50 30 z" stroke="black" stroke-width="3" fill="black"/>
+                    <path d="M 40 10 L 30 25 L 50 25 z" stroke="black" stroke-width="3" fill="black"/>
                 </svg>
 
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 completion: 任务的完成
              -->
-             <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'completion'">
+             <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'completion'">
                  <svg class="symbol-style">
                     <!-- 绘制直线（竖线） -->
-                    <line x1="40" y1="20" x2="40" y2="80" stroke="black" stroke-width="3" fill="none"/>
+                    <line x1="40" y1="15" x2="40" y2="60" stroke="black" stroke-width="3" fill="none"/>
                     <!-- 绘制直线 （横线）-->
-                    <line  x1="20" y1="20" x2="60" y2="20" stroke="black" stroke-width="3" fill="none" />
+                    <line  x1="25" y1="15" x2="55" y2="15" stroke="black" stroke-width="3" fill="none" />
                 </svg>
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 switch task: 切换任务
              -->
-             <div v-bind:key="index" class="childBlock" style="height: 80px;" v-if="stateRepresentation.stateStyle == 'switch-task'">
+             <div v-bind:key="index" class="childBlock" style="height: 60px;" v-if="stateRepresentation.stateStyle == 'switch-task'">
                 <svg class="symbol-style">
-                    <line x1="40" y1="0" x2="40" y2="80" stroke="rgb(0, 185, 255)" stroke-width="3"></line>
+                    <line x1="40" y1="0" x2="40" y2="60" stroke="rgb(0, 185, 255)" stroke-width="3"></line>
                 </svg>   
-                <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 shut-down: 关闭一个任务
              -->
-            <div v-bind:key="index" class="childBlock" style="height : 80px;" v-if="stateRepresentation.stateStyle == 'killed'">
+            <div v-bind:key="index" class="childBlock" style="height : 60px;" v-if="stateRepresentation.stateStyle == 'killed'">
                  <svg class="symbol-style">
-                    <line x1="40" y1="20" x2="40" y2="80" stroke="rgb(255, 208, 0)" stroke-width="4"></line>
+                    <line x1="40" y1="20" x2="40" y2="60" stroke="rgb(255, 208, 0)" stroke-width="4"></line>
                     <line x1="30" y1="10" x2="50" y2="30" stroke="rgb(255, 208, 0)" stroke-width="4"></line>
                     <line x1="30" y1="30" x2="50" y2="10" stroke="rgb(255, 208, 0)" stroke-width="4"></line>
                  </svg>
-                 <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                 <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
 
             <!-- 
                 criticality-switch: 系统关键级发生变化
              -->
-             <div v-bind:key="index" class="childBlock" style="height : 80px;" v-if="stateRepresentation.stateStyle == 'criticality-switch'">
+             <div v-bind:key="index" class="childBlock" style="height : 60px;" v-if="stateRepresentation.stateStyle == 'criticality-switch'">
                  <svg class="symbol-style">
-                    <circle cx="40" cy="40" r="10" stroke="red" stroke-width="4" fill="red"></circle>
+                    <circle cx="40" cy="30" r="10" stroke="red" stroke-width="4" fill="red"></circle>
                  </svg>
-                 <span class="informationStyle" style="height: 80px; line-height: 80px;">{{ stateRepresentation.state }}</span>
+                 <span class="informationStyle" style="height: 60px; line-height: 60px;">{{ stateRepresentation.state }}</span>
             </div>
             
         </template>
@@ -180,6 +193,10 @@
                     {
                         state : 'Wait for a resource',
                         stateStyle : 'locked-attempt'
+                    },
+                    {
+                        state : 'Withdraw of application',
+                        stateStyle : 'withdraw'
                     },
                     {
                         state : 'Release a resource',

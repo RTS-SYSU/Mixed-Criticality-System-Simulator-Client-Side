@@ -300,6 +300,7 @@
                         this.taskGanttInformations = response.data.taskGanttInformations
                         this.cpuGanttInformations = response.data.cpuGanttInformations
                         this.resourceInformations = response.data.resourceInformations
+                        console.log(response.data.pwlpSchedulable)
                     },
                     error => {
                         console.log('error', error.message)

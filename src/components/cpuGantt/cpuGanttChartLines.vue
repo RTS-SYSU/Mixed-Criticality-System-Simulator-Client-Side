@@ -50,6 +50,14 @@
                 <line x1="20" y1="30" x2="20" y2="80" stroke="black" stroke-width="3" fill="none"/>
             </svg>
 
+            <!-- withdraw: 撤销资源申请 -->
+            <svg class="symbol-style" v-if="eventTimePoint.event == 'withdraw'" v-bind:style="symbolPosition(eventTimePoint)" v-bind:key="'widthdraw' + index">
+                <!-- 绘制圆圈 -->
+                <circle cx="20" cy="20" r="10" stroke="#00a3ff" stroke-width="3" fill="#00a3ff"/>
+                <!-- 绘制直线 -->
+                <line x1="20" y1="30" x2="20" y2="80" stroke="black" stroke-width="3" fill="none"/>
+            </svg>
+
             <!-- release: 发布一个任务 -->
             <svg class="symbol-style" v-if="eventTimePoint.event == 'release'" v-bind:style="symbolPosition(eventTimePoint)" v-bind:key="'lock-attempt' + index">
                 <!-- 绘制直线 -->
