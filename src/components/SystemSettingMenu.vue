@@ -174,7 +174,7 @@
                 // svg 元素的颜色
                 circleAndLineColor : 'rgb(208, 211, 212)',
 
-                tmpIsStartUpSwitch : true,
+                tmpIsStartUpSwitch : false,
                 tmpIsAutomaticallySwitch : true,
                 tmpCriticalitySwitchTime : -1
             }
@@ -224,7 +224,7 @@
 
             isStartUpSwitch : {
                 type : Boolean,
-                default : true
+                default : false
             },
 
             isAutomaticallySwitch : {
